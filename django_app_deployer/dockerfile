@@ -1,0 +1,4 @@
+FROM ubuntu
+RUN apt-get update && apt-get install openssh-server sudo python3 python3-pip nginx -y && useradd -m user && usermod -aG sudo user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && apt-get clean
+RUN mkdir /root/.ssh && touch /root/.ssh/authorized_keys 
+CMD service ssh start -D && service nginx start
