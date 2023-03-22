@@ -4,4 +4,4 @@ RUN pacman -Sy --noconfirm && pacman -S --noconfirm openssh sudo && useradd -m u
 USER user
 RUN mkdir /home/user/.ssh && touch /home/user/.ssh/authorized_keys 
 USER root
-CMD ["service","ssh","start","-D"]	
+CMD ["/usr/bin/sshd","-D"]	
