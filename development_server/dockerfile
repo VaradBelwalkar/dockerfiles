@@ -1,0 +1,7 @@
+FROM ubuntu:latest
+USER root
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nano iproute2 ansible openssh-client openssh-server sudo git curl docker.io nodejs npm python3 virtualenv default-jdk apache2 && useradd -m user && usermod -aG sudo user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz && tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz && apt-get clean && chsh -s /bin/bash
+USER user
+RUN mkdir /home/user/.ssh && touch /home/user/.ssh/authorized_keys  
+USER root
+CMD [ "service","ssh","start","-D" ]

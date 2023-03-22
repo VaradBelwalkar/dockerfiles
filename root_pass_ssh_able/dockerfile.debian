@@ -1,5 +1,0 @@
-FROM debian:latest
-
-RUN apt-get update && apt-get install openssh-server sudo -y && useradd -m user && usermod -aG sudo user && echo 'root:password' | chpasswd && echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && apt-get clean && mkdir /root/.ssh && touch /root/.ssh/authorized_keys && chsh -s /bin/bash
-
-CMD ["service","ssh","start","-D"]	
