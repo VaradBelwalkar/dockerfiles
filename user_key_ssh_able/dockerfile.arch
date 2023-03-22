@@ -1,6 +1,6 @@
 FROM archlinux:latest
 USER root
-RUN pacman -Syu && pacman -S --noconfirm openssh sudo && useradd -m user && usermod -aG sudo user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && chsh -s /bin/bash
+RUN pacman -Syu && pacman -S --noconfirm openssh sudo && useradd -m user && usermod -aG wheel user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && chsh -s /bin/bash
 USER user
 RUN mkdir /home/user/.ssh && touch /home/user/.ssh/authorized_keys 
 USER root
