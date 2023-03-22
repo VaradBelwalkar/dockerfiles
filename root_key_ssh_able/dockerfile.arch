@@ -1,5 +1,5 @@
 FROM archlinux:latest
 
-RUN pacman -Sy --noconfirm && pacman -S --noconfirm openssh sudo -y && useradd -m user && usermod -aG wheel user && echo 'root:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && mkdir /root/.ssh && touch /root/.ssh/authorized_keys  && chsh -s /bin/bash
+RUN pacman -Sy --noconfirm && pacman -S --noconfirm openssh sudo && useradd -m user && usermod -aG wheel user && echo 'root:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && mkdir /root/.ssh && touch /root/.ssh/authorized_keys  && chsh -s /bin/bash
 
 CMD ["service","ssh","start","-D"]	
