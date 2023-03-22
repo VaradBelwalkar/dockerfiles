@@ -1,5 +1,0 @@
-The image contains the ssh server which automatically starts when you run the container from image and also prohibits password-login by default
-It also contains all the general utilities that appear in normal desktop Ubuntu installtion which do not come with official ubuntu image (like nano, git etc)
-You can only authorize a public key by using docker's client to cp the public key into the authorized_keys file in the user provided in the container and use the 
-private key for authentication and login to shell 
-The login shell is default to BASH

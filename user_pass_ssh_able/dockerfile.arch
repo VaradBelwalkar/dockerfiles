@@ -1,0 +1,7 @@
+FROM archlinux:latest
+USER root
+RUN pacman -Syu && pacman -S openssh sudo -y && useradd -m user && usermod -aG sudo user && echo 'user:password' | chpasswd && echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && pacman -Sc && chsh -s /bin/bash
+USER user
+RUN mkdir /home/user/.ssh && touch /home/user/.ssh/authorized_keys 
+USER root
+CMD ["/usr/bin/sshd","-D"]	
