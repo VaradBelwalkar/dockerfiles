@@ -1,5 +1,5 @@
 FROM ubuntu
-
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install nano iproute2 openssh-client git curl openssh-server sudo -y && useradd -m user && usermod -aG sudo user && echo 'root:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && apt-get clean && mkdir /root/.ssh && touch /root/.ssh/authorized_keys  && chsh -s /bin/bash
 
 CMD ["service","ssh","start","-D"]	
