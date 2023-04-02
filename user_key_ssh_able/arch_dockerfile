@@ -1,6 +1,6 @@
 FROM archlinux
 USER root
-RUN pacman -Sy --noconfirm && pacman -S --noconfirm openssh sudo && useradd -m user && usermod -aG wheel user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && echo "%wheel      ALL=(ALL:ALL) ALL" >> /etc/sudoers && chsh -s /bin/bash
+RUN pacman -Sy --noconfirm && pacman -S --noconfirm openssh rsync sudo && useradd -m user && usermod -aG wheel user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && echo "%wheel      ALL=(ALL:ALL) ALL" >> /etc/sudoers && chsh -s /bin/bash
 USER user
 RUN mkdir /home/user/.ssh && touch /home/user/.ssh/authorized_keys 
 USER root

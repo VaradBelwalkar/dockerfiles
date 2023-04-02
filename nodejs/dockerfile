@@ -1,7 +1,7 @@
 FROM ubuntu
 ENV DEBIAN_FRONTEND noninteractive
 USER root
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nano iproute2 openssh-client openssh-server sudo git curl nodejs npm apache2 && useradd -m user && usermod -aG sudo user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && apt-get clean && chsh -s /bin/bash
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nano rsync iproute2 openssh-client openssh-server sudo git curl nodejs npm apache2 && useradd -m user && usermod -aG sudo user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && apt-get clean && chsh -s /bin/bash
 USER user
 RUN mkdir /home/user/.ssh && touch /home/user/.ssh/authorized_keys  
 USER root
