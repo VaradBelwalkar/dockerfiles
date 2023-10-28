@@ -1,5 +1,0 @@
-FROM archlinux
-
-RUN pacman -Sy --noconfirm && pacman -S --noconfirm nano rsync git curl openssh sudo && echo 'root:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && touch /root/.ssh/authorized_keys  && chsh -s /bin/bash
-
-CMD ["/usr/bin/sshd","-D"]	

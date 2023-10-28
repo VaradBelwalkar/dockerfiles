@@ -1,8 +1,48 @@
-FROM ubuntu
-ENV DEBIAN_FRONTEND noninteractive
-USER root
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nano rsync iproute2 openssh-client openssh-server sudo git curl docker.io apache2 && useradd -m user && usermod -aG sudo user && echo 'user:password' | chpasswd && echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && apt-get clean && chsh -s /bin/bash
+# Use the official Ubuntu base image
+FROM ubuntu:latest
+
+# Set non-interactive mode for package installations
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update package repositories, upgrade, and install essential packages
+# Combine all apt-get commands into one RUN instruction to reduce the number of layers
+# Clean up in the same layer to reduce image size
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+    nano \
+    rsync \
+    iproute2 \
+    openssh-client \
+    openssh-server \
+    sudo \
+    git \
+    curl \
+    docker.io \
+    apache2 && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
+
+# Add the 'user' to the sudo group and set their password
+RUN usermod -aG sudo user && \
+    echo 'user:password' | chpasswd
+
+# Configure SSH settings
+RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
+    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
+
+# Change the shell for the 'user' to /bin/bash
+RUN chsh -s /bin/bash user
+
+# Switch to the 'user' for configuring SSH keys
 USER user
-RUN mkdir /home/user/.ssh && touch /home/user/.ssh/authorized_keys  
+
+# Create the .ssh directory and an empty authorized_keys file
+RUN mkdir -p /home/user/.ssh && \
+    touch /home/user/.ssh/authorized_keys
+
+# Switch back to the root user for the final command
 USER root
-CMD [ "service","ssh","start","-D" ]
+
+# Start the SSH service in the foreground
+CMD ["service", "ssh", "start", "-D"]
