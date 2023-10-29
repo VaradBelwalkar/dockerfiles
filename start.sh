@@ -1,5 +1,5 @@
 #!/bin/bash
-
+docker rmi varadbelwalkar/base_ubuntu
 docker rmi varadbelwalkar/cpp
 docker rmi varadbelwalkar/nested-docker
 docker rmi varadbelwalkar/golang
@@ -17,6 +17,7 @@ docker rmi cpp
 docker rmi ubuntu
 
 
+docker build -t varadbelwalkar/base_ubuntu -f base_ubuntu/dockerfile ./base_ubuntu
 docker build -t varadbelwalkar/cpp -f cpp/dockerfile ./cpp
 docker build -t varadbelwalkar/nested-docker -f docker/dockerfile ./docker
 docker build -t varadbelwalkar/golang -f go/dockerfile ./go
@@ -27,6 +28,7 @@ docker build -t varadbelwalkar/root_key_ssh_able_ubuntu -f root_key_ssh_able/doc
 docker build -t varadbelwalkar/root_pass_ssh_able_ubuntu -f root_pass_ssh_able/dockerfile ./root_pass_ssh_able
 
 
+docker push varadbelwalkar/base_ubuntu
 docker push varadbelwalkar/cpp
 docker push varadbelwalkar/nested-docker
 docker push varadbelwalkar/go

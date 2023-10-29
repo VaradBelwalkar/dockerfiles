@@ -1,33 +1,5 @@
-# Use the official Ubuntu base image
-FROM ubuntu:latest
-
-# Set non-interactive mode for package installations
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Update package repositories, upgrade, and install essential packages
-# Combine all apt-get commands into one RUN instruction to reduce the number of layers
-# Clean up in the same layer to reduce image size
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y \
-    nano \
-    rsync \
-    iproute2 \
-    openssh-client \
-    openssh-server \
-    git \
-    curl \
-    gcc \
-    g++ \
-    apache2 && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get clean && \
-    echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
-    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
-    chsh -s /bin/bash root && \
-    mkdir -p /root/.ssh && \
-    touch /root/.ssh/authorized_keys
-
+# Use the official varadbelwalkar/base_ubuntu
+FROM varadbelwalkar/base_ubuntu
 
 # Start the SSH service in the foreground
 CMD ["service", "ssh", "start", "-D"]

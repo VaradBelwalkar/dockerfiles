@@ -1,35 +1,10 @@
-# Use the official Ubuntu base image
-FROM ubuntu:latest
+# Use the official varadbelwalkar/base_ubuntu
+FROM varadbelwalkar/base_ubuntu
 
-# Set non-interactive mode for package installations
-ENV DEBIAN_FRONTEND=noninteractive
 
-# Update package repositories, upgrade, and install essential packages
-# Combine all apt-get commands into one RUN instruction to reduce the number of layers
-# Clean up in the same layer to reduce image size
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y \
-    nano \
-    rsync \
-    iproute2 \
-    openssh-client \
-    openssh-server \
-    git \
-    curl \
-    apache2 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
-    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
-    curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz && \
+RUN curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz && \
     tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz && \
-    rm go1.16.7.linux-amd64.tar.gz && \
-    chsh -s /bin/bash && \
-    mkdir -p /root/.ssh && \
-    touch /root/.ssh/authorized_keys
-
-
+    rm go1.16.7.linux-amd64.tar.gz
 
 # Start the SSH service in the foreground
 CMD ["service", "ssh", "start", "-D"]
