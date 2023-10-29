@@ -21,6 +21,8 @@ RUN apt-get update -y && \
     gcc \
     g++ \
     iputils-ping \
+    iputils-tracepath \
+    dnsmasq \
     network-manager \
     apache2 && \
     rm -rf /var/lib/apt/lists/* && \

@@ -1,0 +1,17 @@
+# Use the official varadbelwalkar/python
+FROM varadbelwalkar/python
+
+
+RUN pip install numpy pandas scikit-learn matplotlib jupyter && jupyter notebook --generate-config
+
+# Create and set the start.sh script as a multi-line command
+RUN echo '#!/bin/bash' > /app/start.sh && \
+    echo 'CONTAINER_IP=$(hostname -I | awk "{print \$1}")' >> /app/start.sh && \
+    echo 'sed -i "s/0.0.0.0/\$CONTAINER_IP/g" /root/.jupyter/jupyter_notebook_config.py' >> /app/start.sh && \
+    echo 'jupyter notebook --ip=\$CONTAINER_IP --port=8000 --no-browser --allow-root &' >> /app/start.sh && \
+    echo 'service ssh start -D' >> /app/start.sh && \
+    echo 'tail -f /dev/null' >> /app/start.sh && \
+    chmod +x /app/start.sh
+
+# Start the script by overwriting the CMD
+CMD ["/app/start.sh"]
