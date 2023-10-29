@@ -15,29 +15,21 @@ RUN apt-get update -y && \
     iproute2 \
     openssh-client \
     openssh-server \
-    sudo \
     git \
     curl \
     apache2 && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Configure SSH settings
-RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
-    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
-
-# Download and install Go
-RUN curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
+    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
+    curl -OL https://golang.org/dl/go1.16.7.linux-amd64.tar.gz && \
     tar -C /usr/local -xvf go1.16.7.linux-amd64.tar.gz && \
-    rm go1.16.7.linux-amd64.tar.gz
-
-# Change the shell for the root user to /bin/bash
-# No need to switch to root user as Docker runs commands as root by default
-RUN chsh -s /bin/bash
-
-# Create the .ssh directory and an empty authorized_keys file for the root user
-RUN mkdir -p /root/.ssh && \
+    rm go1.16.7.linux-amd64.tar.gz && \
+    chsh -s /bin/bash && \
+    mkdir -p /root/.ssh && \
     touch /root/.ssh/authorized_keys
+
+
 
 # Start the SSH service in the foreground
 CMD ["service", "ssh", "start", "-D"]

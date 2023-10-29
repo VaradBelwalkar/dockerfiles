@@ -15,26 +15,20 @@ RUN apt-get update -y && \
     iproute2 \
     openssh-client \
     openssh-server \
-    sudo \
     git \
     curl \
     python3 \
     virtualenv \
     apache2 && \
     rm -rf /var/lib/apt/lists/* && \
-    apt-get clean
-
-# Configure SSH settings
-RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
-    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
-
-# Change the shell for the root user to /bin/bash
-# No need to switch to root user as Docker runs commands as root by default
-RUN chsh -s /bin/bash
-
-# Create the .ssh directory and an empty authorized_keys file for the root user
-RUN mkdir -p /root/.ssh && \
+    apt-get clean && \
+    echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
+    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
+    chsh -s /bin/bash && \
+    mkdir -p /root/.ssh && \
     touch /root/.ssh/authorized_keys
+
+
 
 # Start the SSH service in the foreground
 CMD ["service", "ssh", "start", "-D"]

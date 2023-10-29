@@ -18,25 +18,14 @@ RUN apt-get update && \
     openssh-server \
     sudo && \
     rm -rf /var/lib/apt/lists/* && \
-    apt-get clean
+    apt-get clean && \
+    echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
+    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
+    mkdir -p /root/.ssh && \
+    touch /root/.ssh/authorized_keys && \
+    chsh -s /bin/bash
 
-# Create a new user 'user'
-RUN useradd -m user && \
-    usermod -aG sudo user
 
-# Set the password for the 'root' user
-RUN echo 'root:password' | chpasswd
-
-# Configure SSH settings
-RUN echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
-
-# Create the .ssh directory and an empty authorized_keys file for the 'root' user
-RUN mkdir -p /root/.ssh && \
-    touch /root/.ssh/authorized_keys
-
-# Change the shell for the 'root' user to /bin/bash
-# No need to switch to root user as Docker runs commands as root by default
-RUN chsh -s /bin/bash
 
 # Start the SSH service in the foreground
 CMD ["service", "ssh", "start", "-D"]
