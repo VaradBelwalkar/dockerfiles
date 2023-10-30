@@ -5,6 +5,7 @@ docker rmi varadbelwalkar/nested-docker
 docker rmi varadbelwalkar/golang
 docker rmi varadbelwalkar/java 
 docker rmi varadbelwalkar/nodejs
+docker rmi varadbelwalkar/machine-learning
 docker rmi varadbelwalkar/python
 docker rmi varadbelwalkar/root_key_ssh_able_ubuntu
 docker rmi varadbelwalkar/root_pass_ssh_able_ubuntu
@@ -24,8 +25,8 @@ docker build -t varadbelwalkar/golang -f go/dockerfile ./go
 docker build -t varadbelwalkar/java -f java/dockerfile ./java
 docker build -t varadbelwalkar/nodejs -f nodejs/dockerfile ./nodejs
 docker build -t varadbelwalkar/python -f python/dockerfile ./python
+docker build -t varadbelwalkar/machine-learning -f machine-learning/dockerfile ./machine-learning
 docker build -t varadbelwalkar/root_key_ssh_able_ubuntu -f root_key_ssh_able/dockerfile ./root_key_ssh_able
-docker build -t varadbelwalkar/root_pass_ssh_able_ubuntu -f root_pass_ssh_able/dockerfile ./root_pass_ssh_able
 
 
 docker push varadbelwalkar/base_ubuntu
@@ -35,8 +36,8 @@ docker push varadbelwalkar/go
 docker push varadbelwalkar/java
 docker push varadbelwalkar/nodejs
 docker push varadbelwalkar/python
+docker push varadbelwalkar/machine-learning
 docker push varadbelwalkar/root_key_ssh_able_ubuntu
-docker push varadbelwalkar/root_pass_ssh_able_ubuntu
 
 
 docker image tag varadbelwalkar/cpp cpp
@@ -45,4 +46,5 @@ docker image tag varadbelwalkar/golang golang
 docker image tag varadbelwalkar/java java
 docker image tag varadbelwalkar/nodejs nodejs
 docker image tag varadbelwalkar/python python
+docker image tag varadbelwalkar/machine-learning machine-learning
 docker image tag varadbelwalkar/root_key_ssh_able_ubuntu ubuntu

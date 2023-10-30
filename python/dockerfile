@@ -2,7 +2,7 @@
 FROM varadbelwalkar/base_ubuntu
 
 
-RUN apt-get install -y \
+RUN apt-get update -y && apt-get install -y \
     python3 \
     python3-pip \
     virtualenv && \
